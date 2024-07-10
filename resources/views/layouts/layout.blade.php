@@ -14,18 +14,22 @@
         <div class="container">
         <h1>Laravel:Formulários e Validações</h1>
         @if(Session::has("message"))
-        <div class="alert alert-success alert-dismissable">
-            {{Session::get("message")}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+            <div id="alert" class="alert alert-success alert-dismissable">
+                {{Session::get("message")}}
+                <button type="button" id="btn-close" class="close btn btn-success" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
         @endif
         @yield("content")
         </div>
     </div>
 
 <script type="text/javascript" src={{asset("js/app.js")}}></script>
-
+<script>
+    document.getElementById("btn-close").onclick = function() {
+        document.getElementById("alert").style.display = "none";
+    }
+</script>
 </body>
 </html>

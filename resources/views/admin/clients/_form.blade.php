@@ -1,76 +1,80 @@
-{{csrf_field()}}
-    @php
-        use App\Models\Client;
-    @endphp
-<input type="hidden" name="client_type" value="{{$clientType}}">
-    {{-- <input type="hidden" name="_method" value="PUT"> --}}
-    {{-- {{method_field("PUT")}} nao pode manter o method field por causa do PUT --}}
-    <div class="form-group">
-        <label for="name">Nome</label>
-        <input class="form-control" id="name" type="text" name="name" value="{{old("name", $client->name)}}">
-    </div>
+{{-- {{csrf_field()}} token já foi enviado pelo form::open
+Todos os old() foram trocados para null por causa do (Form::model)--}}
+{{Form::hidden("client_type", $clientType)}}
 
-    <div class="form-group">
-        <label for="document_number">Documento</label>
-        <input class="form-control" id="document_number" type="text" name="document_number" value="{{old("document_number",$client->document_number)}}">
-    </div>
+@component("form._form_group", ["field" => "name"])
+    {{Form::label("name", "Nome", ["class"=> "control-label"])}}
+    {{Form::text("name", null, ["class"=> "form-control"])}}
+@endcomponent
+{{-- {{Form::text("name", old("name", $client->name), ["class"=> "form-control"])}} --}}
 
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input class="form-control" id="email" type="email" name="email" value="{{old("email",$client->email)}}">
-    </div>
+    @component("form._form_group", ["field" => "document_number"])
+        {{Form::label("document_number", "Documento")}}
+        {{Form::text("document_number", null, ["class"=> "form-control"])}}
+    @endcomponent
 
-    <div class="form-group">
-        <label for="phone">Telefone</label>
-        <input class="form-control" id="phone" type="phone" name="phone" value="{{old("phone",$client->phone)}}">
-    </div>
+    @component("form._form_group", ["field" => "email"])
+        {{Form::label("email", "E-mail")}}
+        {{Form::email("email", null, ["class"=> "form-control"])}}
+    @endcomponent
+
+    @component("form._form_group", ["field" => "phone"])
+        {{Form::label("phone", "Telefone")}}
+        {{Form::text("phone", null, ["class"=> "form-control"])}}
+    @endcomponent
+
+        @php
+            use App\Models\Client;
+        @endphp
 
     @if($clientType == Client::TYPE_INDIVIDUAL) {{--se tipo do cliente for pessoa fisica(individual) vai mostrar as informações dentro do if--}}
-    @php
-    //variavel usada para o código não ficar enorme
-    $maritalStatus = $client->marital_status;
-    @endphp
-    <div class="form-group">
-        <label for="marital_status">Estado Civil</label>
-        <select class="form-control" id="marital_status" name="marital_status" value="{{$maritalStatus}}">
-            <option value="">Selecione o estado civil</option>
-            <option value="1" {{old("marital_status", $maritalStatus) == 1? 'selected="selected"': ""}}>Solteiro</option>
-            <option value="2" {{old("marital_status", $maritalStatus) == 2? 'selected="selected"': ""}}>Casado</option>
-            <option value="3" {{old("marital_status", $maritalStatus) == 3?  'selected="selected"': ""}}>Divorciado</option>
-        </select>
-    </div>
 
-    <div class="form-group">
-        <label for="date_birth">Data de Nascimento</label>
-        <input class="form-control" id="date_birth" type="date" name="date_birth" value="{{old("date_birth",$client->date_birth)}}">
-    </div>
+    @component("form._form_group", ["field" => "marital_status"])
+        {{Form::label("marital_status", "Estado Civil")}}
+        {{Form::select("marital_status", [
+         "" => "Selecione o estado civil",
+         "1" => "Solteiro(a)",
+         "2" => "Casado(a)",
+         "3" => "Divorciado(a)"
+         ], null, ["class"=> "form-control"] )}}
+          <label for="marital_status">Estado Civil</label>
+          {{-- ], old("marital_status", $maritalStatus), ["class"=> "form-control"] )}} --}}
+    @endcomponent
+
+    @component("form._form_group", ["field" => "date_birth"])
+        {{Form::label("date_birth", "Data Nasc.")}}
+        {{Form::date("date_birth", null, ["class"=> "form-control"])}}
+    @endcomponent
 
     <div class="radio">
-        <label for="sex_m">
-        <input id="sex_m" type="radio" name="sex" value="m" {{old("sex", $client->sex) == "m"? 'checked="checked"': ""}}> Masculino
+
+        <label for="sex">
+        {{-- {{Form::radio("sex", "m", old("sex", $client->sex) == "m")}} Masculino --}}
+        {{Form::radio("sex", "m")}} Masculino
         </label>
     </div>
     <div class="radio">
         <label for="sex_f">
-        <input id="sex_f" type="radio" name="sex" value="f" {{old("sex", $client->sex) == "f"? 'checked="checked"': ""}}> Feminino
+        {{Form::radio("sex", "f")}} Feminino
         </label>
     </div>
 
-    <div class="form-group">
-        <label for="physical_disability">Deficiência Física</label>
-        <input class="form-control" id="physical_disability" type="text" name="physical_disability" value="{{old("physical_disability", $client->physical_disability)}}">
-    </div>
+    @component("form._form_group", ["field" => "physical_disability"])
+            {{Form::label("physical_disability", "Deficiência Física")}}
+            {{Form::text("physical_disability", null, ["class"=> "form-control"])}}
+    @endcomponent
 
     @else {{-- se o tipo for qualquer coisa diferente de individual (pessoa fisica) ele vai rodar o comando dentro do else--}}
 
-    <div class="form-group">
-        <label for="company_name">Nome da Empresa</label>
-        <input class="form-control" id="company_name" type="text" name="company_name" value="{{old("company_name", $client->company_name)}}">
-    </div>
+    @component("form._form_group", ["field" => "company_name"])
+        {{Form::label("company_name", "Nome da Empresa")}}
+        {{Form::text("company_name", null,["class"=> "form-control"])}} {{--para forms de criação apenas--}}
+    @endcomponent
 
     @endif {{--vai impedir que o if else continue rodando a partir deste ponto do codigo --}}
     <div class="form-group">
         <label for="defaulter">
-        <input class="checkbox" id="defaulter" type="checkbox" name="defaulter" {{old("defaulter", $client->defaulter)? 'checked="checked"': ""}}> Inadimplente
+            {{-- {{Form::checkbox("defaulter", 1, old("defaulter", $client->defaulter))}} Inadimplente --}}
+            {{Form::checkbox("defaulter")}} Inadimplente
         </label>
     </div>

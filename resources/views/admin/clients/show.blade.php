@@ -7,10 +7,12 @@
 {{-- inicio botao delete --}}
 <a class="btn btn-danger" href="{{route("clients.destroy", $client->id)}}"
     onclick="event.preventDefault();if(confirm('Deseja excluir este item?')){document.getElementById('form-delete').submit();}">Excluir Cliente</a>
-    <form id="form-delete" style="display: none" action="{{route("clients.destroy", $client->id)}}" method="post">
-    {{ csrf_field() }}
-    {{ method_field("DELETE") }}
-    </form>
+    {{Form::open(['route' => ['clients.destroy', $client->id], 'method'=> 'DELETE', 'id' => 'form-delete'])}}
+    {{Form::close()}}
+    {{-- <form id="form-delete" style="display: none" action="{{route("clients.destroy", $client->id)}}" method="post"> --}}
+    {{-- {{ csrf_field() }} Desnecessario graças a o {{Form}}
+    {{ method_field("DELETE") }} --}}
+    {{-- </form> --}}
 {{-- fim botao delete --}}
     |
 <a class="btn btn-default" href="{{route("clients.index")}}">Voltar</a>
