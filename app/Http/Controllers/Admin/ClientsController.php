@@ -19,7 +19,7 @@ class ClientsController extends Controller
     {
         // var_dump(route("meu-nome")); teste de função
         // Session::flash("Chave", "Transmissão");
-        $clients = Client::all();
+        $clients = Client::paginate(3);
         return view("admin.clients.index", compact("clients"));
     }
 

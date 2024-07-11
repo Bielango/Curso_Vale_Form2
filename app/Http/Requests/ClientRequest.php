@@ -41,7 +41,7 @@ class ClientRequest extends FormRequest
                     "date_birth" => "required|date",
                     "sex" => "required|in:m,f",
                     "marital_status" => "required|in:$marital_status",
-                    "physical_disability"=> "max:255"
+                    "physical_disability"=> "max:255",
                 ];
                 $rulesLegal = [
                     "company_name"=>"required|max:255",

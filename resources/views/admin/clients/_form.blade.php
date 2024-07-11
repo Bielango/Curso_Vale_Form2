@@ -46,19 +46,21 @@ Todos os old() foram trocados para null por causa do (Form::model)--}}
         {{Form::date("date_birth", null, ["class"=> "form-control"])}}
     @endcomponent
 
-    <div class="radio">
+    <div class="radio {{$errors->has("sex")? "alert-danger" : ""}}">
 
         <label for="sex">
         {{-- {{Form::radio("sex", "m", old("sex", $client->sex) == "m")}} Masculino --}}
         {{Form::radio("sex", "m")}} Masculino
         </label>
     </div>
-    <div class="radio">
+    <div class="radio {{$errors->has("sex")? "alert-danger" : ""}}">
         <label for="sex_f">
         {{Form::radio("sex", "f")}} Feminino
         </label>
     </div>
-
+    <div class="{{$errors->has("sex")? "alert-danger" : ""}}">
+    @include("form._help_block", ["field"=> "sex"])
+    </div>
     @component("form._form_group", ["field" => "physical_disability"])
             {{Form::label("physical_disability", "Deficiência Física")}}
             {{Form::text("physical_disability", null, ["class"=> "form-control"])}}

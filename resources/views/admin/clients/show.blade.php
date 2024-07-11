@@ -9,16 +9,9 @@
     onclick="event.preventDefault();if(confirm('Deseja excluir este item?')){document.getElementById('form-delete').submit();}">Excluir Cliente</a>
     {{Form::open(['route' => ['clients.destroy', $client->id], 'method'=> 'DELETE', 'id' => 'form-delete'])}}
     {{Form::close()}}
-    {{-- <form id="form-delete" style="display: none" action="{{route("clients.destroy", $client->id)}}" method="post"> --}}
     {{-- {{ csrf_field() }} Desnecessario graças a o {{Form}}
-    {{ method_field("DELETE") }} --}}
-    {{-- </form> --}}
-{{-- fim botao delete --}}
-    |
+{{-- fim botao delete --}}|
 <a class="btn btn-default" href="{{route("clients.index")}}">Voltar</a>
-{{-- @php
-    use App\Models\Client;
-@endphp --}}
 </td>
 <table class="table table-bordered">
     <tbody>
@@ -32,7 +25,7 @@
         </tr>
         <tr>
             <th scope="row">Documento</th>
-            <td>{{$client->document_number}}</td>
+            <td>{{$client->document_number_formatted}}</td>
         </tr>
         <tr>
             <th scope="row">E-mail</th>
@@ -43,10 +36,12 @@
             <td>{{$client->phone}}</td>
         </tr>
 
-        {{-- @if($clientType == Client::TYPE_INDIVIDUAL) --}}
+        {{-- @if("client_type" == App\Models\Client::TYPE_INDIVIDUAL) --}}
         <tr>
             <th scope="row">Estado Civil</th>
             <td>@switch($client->marital_status)
+                @case("")//
+                         @break
                 @case(1)Solteiro
                         @break
                 @case(2)Casado
@@ -58,28 +53,28 @@
         </tr>
         <tr>
             <th scope="row">Data Nasc.</th>
-            <td>{{$client->date_birth}}</td>
+            <td>{{$client->date_birth_formatted? $client->date_birth_formatted: "//"}}</td>
         </tr>
         <tr>
             <th scope="row">Sexo</th>
-            <td>{{$client->sex == "m" ? "Masculino" : "Feminino"}}</td>
+            <td>{{$client->sex_formatted?$client->sex_formatted:"//"}}</td>
         </tr>
         <tr>
             <th scope="row">Def. Física</th>
-            <td>{{$client->physical_disability}}</td>
+            <td>{{$client->physical_disability?$client->physical_disability:"//"}}</td>
         </tr>
 
         {{-- @else --}}
         <tr>
             <th scope="row">Nome da empresa</th>
-            <td>{{$client->company_name}}</td>
+            <td>{{$client->company_name? $client->company_name : "//"}}</td>
         </tr>
 
         {{-- @endif --}}
 
         <tr>
             <th scope="row">Inadimplencia</th>
-            <td>{{$client->defaulter}}</td>
+            <td>{{$client->defaulter?"Inadimplente":"Adimplente"}}</td>
         </tr>
     </tbody>
 </table>
