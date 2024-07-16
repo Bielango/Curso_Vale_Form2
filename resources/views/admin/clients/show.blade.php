@@ -36,7 +36,7 @@
             <td>{{$client->phone}}</td>
         </tr>
 
-        {{-- @if("client_type" == App\Models\Client::TYPE_INDIVIDUAL) --}}
+        @if($client->client_type == "individual")
         <tr>
             <th scope="row">Estado Civil</th>
             <td>@switch($client->marital_status)
@@ -53,24 +53,24 @@
         </tr>
         <tr>
             <th scope="row">Data Nasc.</th>
-            <td>{{$client->date_birth_formatted? $client->date_birth_formatted: "//"}}</td>
+            <td>{{$client->date_birth_formatted}}</td>
         </tr>
         <tr>
             <th scope="row">Sexo</th>
-            <td>{{$client->sex_formatted?$client->sex_formatted:"//"}}</td>
+            <td>{{$client->sex_formatted}}</td>
         </tr>
         <tr>
             <th scope="row">Def. Física</th>
-            <td>{{$client->physical_disability?$client->physical_disability:"//"}}</td>
+            <td>{{$client->physical_disability}}</td>
         </tr>
 
-        {{-- @else --}}
+        @else
         <tr>
             <th scope="row">Nome da empresa</th>
-            <td>{{$client->company_name? $client->company_name : "//"}}</td>
+            <td>{{$client->company_name}}</td>
         </tr>
 
-        {{-- @endif --}}
+        @endif
 
         <tr>
             <th scope="row">Inadimplencia</th>

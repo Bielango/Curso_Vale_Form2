@@ -4,6 +4,9 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Client;
+
+require_once __DIR__ . "/../faker_data/document_number.php";
+
 class ClientFactory extends Factory
 {
     /**
