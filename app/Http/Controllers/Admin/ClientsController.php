@@ -110,7 +110,7 @@ class ClientsController extends Controller
     {
         $client->delete();
         return redirect()->route("clients.index")
-        ->with("message", "Cliente eliminado com sucesso");
+        ->with("message", "Cliente excluido com sucesso");
     }
 
     // metodo de validação dentro do controller, foi desativado aqui e re construido no: Request\ClientRequest
